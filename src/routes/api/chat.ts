@@ -80,7 +80,7 @@ export const Route = createFileRoute("/api/chat")({
         try {
           const google = createGoogleGenerativeAI({ apiKey });
           const result = streamText({
-            model: google("gemini-2.5-flash"),
+            model: google("gemini-2.0-flash"),
             system: buildSystemPrompt(body.profile, body.language),
             messages: await convertToModelMessages(body.messages as UIMessage[]),
           });
@@ -100,3 +100,4 @@ export const Route = createFileRoute("/api/chat")({
     },
   },
 });
+
