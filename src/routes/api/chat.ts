@@ -1,12 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, type LanguageModel, type UIMessage } from "ai";
-import {
-  createLovableAiGatewayProvider,
-  getLovableAiGatewayResponseHeaders,
-  getLovableAiGatewayRunId,
-  withLovableAiGatewayRunIdHeader,
-  LOVABLE_AIG_RUN_ID_HEADER,
-} from "@/lib/ai-gateway.server";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { programCatalogForPrompt } from "@/data/programs";
 import type { UserProfile } from "@/lib/types";
 
@@ -60,10 +54,10 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env.LOVABLE_API_KEY;
+        const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
           return new Response(
-            JSON.stringify({ error: "Server is missing LOVABLE_API_KEY. Enable Lovable AI for this project." }),
+            JSON.stringify({ error: "Server is missing GEMINI_API_KEY. Set it in your environment variables." }),
             { status: 500, headers: { "content-type": "application/json" } },
           );
         }
@@ -73,46 +67,33 @@ export const Route = createFileRoute("/api/chat")({
           body = (await request.json()) as Body;
         } catch {
           return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
-            status: 400,
-            headers: { "content-type": "application/json" },
+            status: 400, headers: { "content-type": "application/json" },
           });
         }
 
         if (!Array.isArray(body.messages)) {
           return new Response(JSON.stringify({ error: "messages are required" }), {
-            status: 400,
-            headers: { "content-type": "application/json" },
+            status: 400, headers: { "content-type": "application/json" },
           });
         }
 
-        const initialRunId = getLovableAiGatewayRunId(request);
-        const gateway = createLovableAiGatewayProvider(apiKey, initialRunId);
-        // The openai-compatible adapter emits a newer spec than ai@6's union; cast keeps
-        // the runtime call typed without losing AI SDK type safety elsewhere.
-        const model = gateway("google/gemini-3-flash-preview") as unknown as LanguageModel;
-
         try {
+          const google = createGoogleGenerativeAI({ apiKey });
           const result = streamText({
-            model,
+            model: google("gemini-2.5-flash"),
             system: buildSystemPrompt(body.profile, body.language),
             messages: await convertToModelMessages(body.messages as UIMessage[]),
           });
 
-          const response = result.toUIMessageStreamResponse({
+          return result.toUIMessageStreamResponse({
             originalMessages: body.messages as UIMessage[],
-            headers: getLovableAiGatewayResponseHeaders(undefined, {
-              ...(initialRunId ? { [LOVABLE_AIG_RUN_ID_HEADER]: initialRunId } : {}),
-            }),
           });
-
-          return withLovableAiGatewayRunIdHeader(response, gateway);
         } catch (err) {
           console.error("Netr chat error:", err);
-          const message = err instanceof Error ? err.message : "Unknown AI gateway error";
-          const status = /429/.test(message) ? 429 : /402/.test(message) ? 402 : 500;
+          const message = err instanceof Error ? err.message : "Unknown AI error";
+          const status = /429/.test(message) ? 429 : 500;
           return new Response(JSON.stringify({ error: message }), {
-            status,
-            headers: { "content-type": "application/json" },
+            status, headers: { "content-type": "application/json" },
           });
         }
       },

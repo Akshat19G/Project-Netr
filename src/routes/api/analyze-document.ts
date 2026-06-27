@@ -24,25 +24,28 @@ Rules:
 - "confidence" is a number 0-1 reflecting how certain you are about your reading.
 - If the file is unreadable or not a real document, return summary: "Could not read this document confidently." and confidence: 0.`;
 
-function buildUserContent(body: Body) {
+function dataUrlToInlinePart(dataUrl: string, fallbackMime: string) {
+  const match = /^data:([^;]+);base64,(.+)$/.exec(dataUrl);
+  if (!match) return null;
+  return { inline_data: { mime_type: match[1] || fallbackMime, data: match[2] } };
+}
+
+function buildParts(body: Body) {
   const text = `Document filename: ${body.name}\nUser-suggested category: ${body.category ?? "unknown"}\nReturn the JSON now.`;
   if (body.type.startsWith("image/")) {
-    return [
-      { type: "text", text },
-      { type: "image_url", image_url: { url: body.dataUrl } },
-    ];
+    const part = dataUrlToInlinePart(body.dataUrl, body.type);
+    if (!part) return null;
+    return [{ text }, part];
   }
   if (body.type === "application/pdf" || body.name.toLowerCase().endsWith(".pdf")) {
-    return [
-      { type: "text", text },
-      { type: "file", file: { filename: body.name, file_data: body.dataUrl } },
-    ];
+    const part = dataUrlToInlinePart(body.dataUrl, "application/pdf");
+    if (!part) return null;
+    return [{ text }, part];
   }
-  // Plain text-ish: decode dataUrl
   try {
     const base64 = body.dataUrl.split(",")[1] ?? "";
     const decoded = atob(base64).slice(0, 16000);
-    return [{ type: "text", text: `${text}\n\nFile contents:\n${decoded}` }];
+    return [{ text: `${text}\n\nFile contents:\n${decoded}` }];
   } catch {
     return null;
   }
@@ -52,10 +55,10 @@ export const Route = createFileRoute("/api/analyze-document")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env.LOVABLE_API_KEY;
+        const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
           return new Response(
-            JSON.stringify({ error: "Server is missing LOVABLE_API_KEY. Enable Lovable AI for this project." }),
+            JSON.stringify({ error: "Server is missing GEMINI_API_KEY. Set it in your environment variables." }),
             { status: 500, headers: { "content-type": "application/json" } },
           );
         }
@@ -73,8 +76,8 @@ export const Route = createFileRoute("/api/analyze-document")({
           });
         }
 
-        const content = buildUserContent(body);
-        if (!content) {
+        const parts = buildParts(body);
+        if (!parts) {
           const unsupported: DocAnalysis = {
             status: "unsupported",
             updatedAt: Date.now(),
@@ -85,40 +88,35 @@ export const Route = createFileRoute("/api/analyze-document")({
         }
 
         try {
-          const upstream = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              "Lovable-API-Key": apiKey,
+          const upstream = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                contents: [{ role: "user", parts }],
+                generationConfig: { temperature: 0.2, responseMimeType: "application/json" },
+              }),
             },
-            body: JSON.stringify({
-              model: "google/gemini-3-flash-preview",
-              messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content },
-              ],
-              temperature: 0.2,
-            }),
-          });
+          );
 
           if (!upstream.ok) {
             const errText = await upstream.text().catch(() => "");
-            const status = upstream.status;
             return new Response(
-              JSON.stringify({ error: errText || `AI gateway error (${status})` }),
-              { status, headers: { "content-type": "application/json" } },
+              JSON.stringify({ error: errText || `Gemini error (${upstream.status})` }),
+              { status: upstream.status, headers: { "content-type": "application/json" } },
             );
           }
           const json = (await upstream.json()) as {
-            choices?: { message?: { content?: string } }[];
+            candidates?: { content?: { parts?: { text?: string }[] } }[];
           };
-          const raw = json.choices?.[0]?.message?.content ?? "";
+          const raw = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
           const cleaned = raw.trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
           let parsed: Partial<DocAnalysis> = {};
           try {
             parsed = JSON.parse(cleaned);
           } catch {
-            // best-effort: extract first { ... } block
             const m = cleaned.match(/\{[\s\S]*\}/);
             if (m) {
               try { parsed = JSON.parse(m[0]); } catch { /* ignore */ }
