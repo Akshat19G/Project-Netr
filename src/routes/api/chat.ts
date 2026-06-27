@@ -23,9 +23,18 @@ function profileSummary(p?: UserProfile): string {
 type Body = { messages?: unknown; profile?: UserProfile; language?: string };
 
 const LANGUAGE_NAMES: Record<string, string> = {
-  en: "English", hi: "Hindi", mr: "Marathi", ta: "Tamil", te: "Telugu",
-  kn: "Kannada", ml: "Malayalam", gu: "Gujarati", pa: "Punjabi",
-  bn: "Bengali", or: "Odia", ur: "Urdu",
+  en: "English",
+  hi: "Hindi",
+  mr: "Marathi",
+  ta: "Tamil",
+  te: "Telugu",
+  kn: "Kannada",
+  ml: "Malayalam",
+  gu: "Gujarati",
+  pa: "Punjabi",
+  bn: "Bengali",
+  or: "Odia",
+  ur: "Urdu",
 };
 
 function buildSystemPrompt(profile?: UserProfile, language?: string) {
@@ -80,7 +89,9 @@ export const Route = createFileRoute("/api/chat")({
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
           return new Response(
-            JSON.stringify({ error: "Server is missing GEMINI_API_KEY. Set it in your environment variables." }),
+            JSON.stringify({
+              error: "Server is missing GEMINI_API_KEY. Set it in your environment variables.",
+            }),
             { status: 500, headers: { "content-type": "application/json" } },
           );
         }
@@ -90,13 +101,15 @@ export const Route = createFileRoute("/api/chat")({
           body = (await request.json()) as Body;
         } catch {
           return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
-            status: 400, headers: { "content-type": "application/json" },
+            status: 400,
+            headers: { "content-type": "application/json" },
           });
         }
 
         if (!Array.isArray(body.messages)) {
           return new Response(JSON.stringify({ error: "messages are required" }), {
-            status: 400, headers: { "content-type": "application/json" },
+            status: 400,
+            headers: { "content-type": "application/json" },
           });
         }
 
@@ -155,7 +168,8 @@ export const Route = createFileRoute("/api/chat")({
           const message = err instanceof Error ? err.message : "Unknown AI error";
           const status = /429/.test(message) ? 429 : 500;
           return new Response(JSON.stringify({ error: message }), {
-            status, headers: { "content-type": "application/json" },
+            status,
+            headers: { "content-type": "application/json" },
           });
         }
       },

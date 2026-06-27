@@ -15,7 +15,10 @@ export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
       { title: "Settings · Project Netr" },
-      { name: "description", content: "Privacy, appearance, language and accessibility — all in one quiet place." },
+      {
+        name: "description",
+        content: "Privacy, appearance, language and accessibility — all in one quiet place.",
+      },
     ],
   }),
   component: SettingsPage,
@@ -34,10 +37,17 @@ function SettingsPage() {
   const clearChat = useChatStore((s) => s.clear);
   const clearRecent = useRecentSearchesStore((s) => s.clear);
 
-  const onChooseTheme = (t: Theme) => { setTheme(t); applyTheme(t); };
+  const onChooseTheme = (t: Theme) => {
+    setTheme(t);
+    applyTheme(t);
+  };
   const onChooseLanguage = (code: LangCode) => {
     setLanguage(code);
-    toast.success(t("toast.langUpdated", { native: SUPPORTED_LANGUAGES.find((l) => l.code === code)?.native ?? "" }));
+    toast.success(
+      t("toast.langUpdated", {
+        native: SUPPORTED_LANGUAGES.find((l) => l.code === code)?.native ?? "",
+      }),
+    );
   };
 
   const clearAll = () => {
@@ -52,24 +62,38 @@ function SettingsPage() {
     <AppShell>
       <PageHeader
         eyebrow={t("settings.eyebrow")}
-        title={<>{t("settings.titlePre")} <span className="netr-glow-text">{t("settings.titleHighlight")}</span></>}
+        title={
+          <>
+            {t("settings.titlePre")}{" "}
+            <span className="netr-glow-text">{t("settings.titleHighlight")}</span>
+          </>
+        }
         description={t("settings.description")}
       />
 
       {hasProfile && (
         <div className="netr-card mb-6 flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("settings.yourProfile")}</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {t("settings.yourProfile")}
+            </p>
             <p className="mt-1 text-sm">{profileSummary(profile)}</p>
           </div>
-          <button onClick={clearProfile} className="rounded-full border border-border/70 px-3 py-1.5 text-xs font-medium hover:border-destructive/50 hover:text-destructive">
+          <button
+            onClick={clearProfile}
+            className="rounded-full border border-border/70 px-3 py-1.5 text-xs font-medium hover:border-destructive/50 hover:text-destructive"
+          >
             {t("settings.resetProfile")}
           </button>
         </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <SettingsGroup icon={Palette} title={t("settings.appearance.title")} description={t("settings.appearance.description")}>
+        <SettingsGroup
+          icon={Palette}
+          title={t("settings.appearance.title")}
+          description={t("settings.appearance.description")}
+        >
           <div className="grid grid-cols-3 gap-2">
             {(["light", "dark", "system"] as const).map((th) => (
               <button
@@ -84,7 +108,11 @@ function SettingsPage() {
           </div>
         </SettingsGroup>
 
-        <SettingsGroup icon={Languages} title={t("settings.languageSection")} description={t("settings.languageDesc")}>
+        <SettingsGroup
+          icon={Languages}
+          title={t("settings.languageSection")}
+          description={t("settings.languageDesc")}
+        >
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {SUPPORTED_LANGUAGES.map((lang) => {
               const active = (i18n.language || "en").slice(0, 2) === lang.code;
@@ -96,7 +124,9 @@ function SettingsPage() {
                   dir={lang.dir ?? "ltr"}
                   aria-pressed={active}
                   className={`flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-saffron/50 ${
-                    active ? "border-saffron bg-saffron/10" : "border-border/60 hover:border-saffron/40"
+                    active
+                      ? "border-saffron bg-saffron/10"
+                      : "border-border/60 hover:border-saffron/40"
                   }`}
                 >
                   <span aria-hidden>{lang.flag}</span>
@@ -109,18 +139,34 @@ function SettingsPage() {
             })}
           </div>
           <button
-            onClick={() => { resetToBrowserLanguage(); toast.success(t("toast.resetBrowserLang")); }}
+            onClick={() => {
+              resetToBrowserLanguage();
+              toast.success(t("toast.resetBrowserLang"));
+            }}
             className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
           >
             {t("settings.autoDetect")}
           </button>
         </SettingsGroup>
 
-        <SettingsGroup icon={Eye} title={t("settings.accessibility.title")} description={t("settings.accessibility.description")}>
-          <Toggle label={t("settings.accessibility.reduceMotion")} sub={t("settings.accessibility.reduceMotionSub")} value={reduceMotion} onChange={setReduceMotion} />
+        <SettingsGroup
+          icon={Eye}
+          title={t("settings.accessibility.title")}
+          description={t("settings.accessibility.description")}
+        >
+          <Toggle
+            label={t("settings.accessibility.reduceMotion")}
+            sub={t("settings.accessibility.reduceMotionSub")}
+            value={reduceMotion}
+            onChange={setReduceMotion}
+          />
         </SettingsGroup>
 
-        <SettingsGroup icon={ShieldCheck} title={t("settings.privacy.title")} description={t("settings.privacy.description")}>
+        <SettingsGroup
+          icon={ShieldCheck}
+          title={t("settings.privacy.title")}
+          description={t("settings.privacy.description")}
+        >
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>· {t("settings.privacy.item1")}</li>
             <li>· {t("settings.privacy.item2")}</li>
@@ -128,11 +174,19 @@ function SettingsPage() {
           </ul>
         </SettingsGroup>
 
-        <SettingsGroup icon={Globe} title={t("settings.region.title")} description={t("settings.region.description")}>
+        <SettingsGroup
+          icon={Globe}
+          title={t("settings.region.title")}
+          description={t("settings.region.description")}
+        >
           <p className="text-sm text-muted-foreground">{t("settings.region.body")}</p>
         </SettingsGroup>
 
-        <SettingsGroup icon={Sparkles} title={t("settings.ai.title")} description={t("settings.ai.description")}>
+        <SettingsGroup
+          icon={Sparkles}
+          title={t("settings.ai.title")}
+          description={t("settings.ai.description")}
+        >
           <p className="text-sm text-muted-foreground">{t("settings.ai.body")}</p>
         </SettingsGroup>
       </div>
@@ -150,11 +204,23 @@ function SettingsPage() {
   );
 }
 
-function SettingsGroup({ icon: Icon, title, description, children }: { icon: React.ComponentType<{ className?: string }>; title: string; description: string; children: React.ReactNode }) {
+function SettingsGroup({
+  icon: Icon,
+  title,
+  description,
+  children,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="netr-card p-6">
       <div className="flex items-center gap-3">
-        <span className="grid h-10 w-10 place-items-center rounded-xl bg-saffron/15 text-saffron"><Icon className="h-5 w-5" /></span>
+        <span className="grid h-10 w-10 place-items-center rounded-xl bg-saffron/15 text-saffron">
+          <Icon className="h-5 w-5" />
+        </span>
         <div>
           <h3 className="font-semibold">{title}</h3>
           <p className="text-xs text-muted-foreground">{description}</p>
@@ -165,7 +231,17 @@ function SettingsGroup({ icon: Icon, title, description, children }: { icon: Rea
   );
 }
 
-function Toggle({ label, sub, value, onChange }: { label: string; sub?: string; value: boolean; onChange: (v: boolean) => void }) {
+function Toggle({
+  label,
+  sub,
+  value,
+  onChange,
+}: {
+  label: string;
+  sub?: string;
+  value: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
     <label className="flex cursor-pointer items-center justify-between gap-4">
       <span>
@@ -177,7 +253,9 @@ function Toggle({ label, sub, value, onChange }: { label: string; sub?: string; 
         onClick={() => onChange(!value)}
         className={`relative h-6 w-11 rounded-full transition-colors ${value ? "bg-saffron" : "bg-secondary"}`}
       >
-        <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
+        <span
+          className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`}
+        />
       </button>
     </label>
   );

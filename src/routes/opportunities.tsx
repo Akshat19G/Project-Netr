@@ -17,7 +17,11 @@ export const Route = createFileRoute("/opportunities")({
   head: () => ({
     meta: [
       { title: "Opportunities · Project Netr" },
-      { name: "description", content: "Search and explore scholarships, grants, schemes and benefits — filtered for who you are." },
+      {
+        name: "description",
+        content:
+          "Search and explore scholarships, grants, schemes and benefits — filtered for who you are.",
+      },
     ],
   }),
   component: OpportunitiesPage,
@@ -28,9 +32,11 @@ function OpportunitiesPage() {
   const profile = useProfileStore((s) => s.profile);
   const hasProfile = useProfileStore((s) => s.hasProfile);
   const personaCats = useMemo(() => categoriesForPersona(profile.persona), [profile.persona]);
-  const isPersonalized = hasProfile && !!profile.persona && personaCats.length < ALL_CATEGORIES.length;
+  const isPersonalized =
+    hasProfile && !!profile.persona && personaCats.length < ALL_CATEGORIES.length;
   const [exploreAll, setExploreAll] = useState(false);
-  const visibleCats: ProgramCategory[] = exploreAll || !isPersonalized ? ALL_CATEGORIES : personaCats;
+  const visibleCats: ProgramCategory[] =
+    exploreAll || !isPersonalized ? ALL_CATEGORIES : personaCats;
 
   const [q, setQ] = useState("");
   const [active, setActive] = useState<ProgramCategory | null>(null);
@@ -57,11 +63,15 @@ function OpportunitiesPage() {
   }, [rawData, visibleCats, active]);
 
   useEffect(() => {
-    const t = setTimeout(() => { if (q.trim()) pushRecent(q.trim()); }, 600);
+    const t = setTimeout(() => {
+      if (q.trim()) pushRecent(q.trim());
+    }, 600);
     return () => clearTimeout(t);
   }, [q, pushRecent]);
 
-  useEffect(() => { setPage(1); }, [q, active, sort, exploreAll]);
+  useEffect(() => {
+    setPage(1);
+  }, [q, active, sort, exploreAll]);
 
   const PAGE_SIZE = 9;
   const total = data.length;
@@ -72,7 +82,12 @@ function OpportunitiesPage() {
     <AppShell>
       <PageHeader
         eyebrow={t("opportunities.eyebrow")}
-        title={<>{t("opportunities.titlePre")} <span className="netr-glow-text">{t("opportunities.titleHighlight")}</span></>}
+        title={
+          <>
+            {t("opportunities.titlePre")}{" "}
+            <span className="netr-glow-text">{t("opportunities.titleHighlight")}</span>
+          </>
+        }
         description={t("opportunities.description")}
       />
 
@@ -85,7 +100,9 @@ function OpportunitiesPage() {
             ) : (
               <>
                 {t("opportunities.personalizedFor", "Personalized for ")}
-                <span className="font-semibold capitalize">{t(`personas.${profile.persona}.title`, profile.persona ?? "")}</span>
+                <span className="font-semibold capitalize">
+                  {t(`personas.${profile.persona}.title`, profile.persona ?? "")}
+                </span>
                 {" — "}
                 {t("opportunities.onlyRelevant", "showing categories that fit you.")}
               </>
@@ -112,7 +129,11 @@ function OpportunitiesPage() {
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70"
         />
         {q && (
-          <button onClick={() => setQ("")} aria-label={t("opportunities.clearSearch")} className="rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground">
+          <button
+            onClick={() => setQ("")}
+            aria-label={t("opportunities.clearSearch")}
+            className="rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+          >
             <X className="h-4 w-4" />
           </button>
         )}
@@ -123,7 +144,11 @@ function OpportunitiesPage() {
         <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
           <span className="uppercase tracking-wider">{t("opportunities.recent")}</span>
           {recent.map((r) => (
-            <button key={r} onClick={() => setQ(r)} className="rounded-full border border-border/60 bg-background/60 px-2.5 py-1 hover:border-saffron/40 hover:text-foreground">
+            <button
+              key={r}
+              onClick={() => setQ(r)}
+              className="rounded-full border border-border/60 bg-background/60 px-2.5 py-1 hover:border-saffron/40 hover:text-foreground"
+            >
               {r}
             </button>
           ))}
@@ -160,7 +185,9 @@ function OpportunitiesPage() {
       </div>
 
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {slice.map((o, i) => <OpportunityCard key={o.id} opportunity={o} index={i} />)}
+        {slice.map((o, i) => (
+          <OpportunityCard key={o.id} opportunity={o} index={i} />
+        ))}
       </div>
 
       {total === 0 && !isFetching && (
@@ -169,9 +196,23 @@ function OpportunitiesPage() {
 
       {totalPages > 1 && (
         <div className="mt-10 flex items-center justify-center gap-2 text-sm">
-          <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="rounded-full border border-border/60 px-4 py-2 disabled:opacity-40">{t("common.previousPage")}</button>
-          <span className="text-muted-foreground">{t("common.pageOf", { page, total: totalPages })}</span>
-          <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="rounded-full border border-border/60 px-4 py-2 disabled:opacity-40">{t("common.nextPage")}</button>
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="rounded-full border border-border/60 px-4 py-2 disabled:opacity-40"
+          >
+            {t("common.previousPage")}
+          </button>
+          <span className="text-muted-foreground">
+            {t("common.pageOf", { page, total: totalPages })}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="rounded-full border border-border/60 px-4 py-2 disabled:opacity-40"
+          >
+            {t("common.nextPage")}
+          </button>
         </div>
       )}
     </AppShell>

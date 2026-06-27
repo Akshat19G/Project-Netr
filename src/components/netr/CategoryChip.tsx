@@ -1,6 +1,14 @@
 import type { Category } from "@/lib/netr-data";
 
-export function CategoryChip({ category, active, onClick }: { category: Category; active?: boolean; onClick?: () => void }) {
+export function CategoryChip({
+  category,
+  active,
+  onClick,
+}: {
+  category: Category;
+  active?: boolean;
+  onClick?: () => void;
+}) {
   const Icon = category.icon;
   return (
     <button

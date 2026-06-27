@@ -24,54 +24,54 @@ Our mission is simple:
 
 ### 🤖 AI Opportunity Assistant
 
-* Natural language conversations
-* Personalized recommendations
-* Future-ready Gemini integration
-* Context-aware responses
-* Multi-turn conversations
+- Natural language conversations
+- Personalized recommendations
+- Future-ready Gemini integration
+- Context-aware responses
+- Multi-turn conversations
 
 ### 🎓 Student Opportunities
 
-* Scholarships
-* Fellowships
-* Internships
-* Skill Development Programs
-* Research Grants
-* Competitions
+- Scholarships
+- Fellowships
+- Internships
+- Skill Development Programs
+- Research Grants
+- Competitions
 
 ### 🌾 Farmer Support
 
-* Government Schemes
-* Crop Insurance
-* Subsidies
-* Agriculture Loans
-* Irrigation Programs
-* Market Support
+- Government Schemes
+- Crop Insurance
+- Subsidies
+- Agriculture Loans
+- Irrigation Programs
+- Market Support
 
 ### 🚀 Startup & Business
 
-* Startup India
-* Seed Funding
-* Incubators
-* Accelerators
-* MSME Schemes
-* Innovation Grants
+- Startup India
+- Seed Funding
+- Incubators
+- Accelerators
+- MSME Schemes
+- Innovation Grants
 
 ### 💼 Career Growth
 
-* Government Jobs
-* Apprenticeships
-* Placement Programs
-* Employment Schemes
-* Skill Development
+- Government Jobs
+- Apprenticeships
+- Placement Programs
+- Employment Schemes
+- Skill Development
 
 ### ❤️ Welfare Programs
 
-* Healthcare
-* Pension
-* Women Empowerment
-* Senior Citizen Benefits
-* Housing Support
+- Healthcare
+- Pension
+- Women Empowerment
+- Senior Citizen Benefits
+- Housing Support
 
 ---
 
@@ -81,12 +81,12 @@ Project Netr adapts itself according to the selected user profile.
 
 Examples:
 
-* 👨‍🎓 Student
-* 🌾 Farmer
-* 💼 Job Seeker
-* 🚀 Startup Founder
-* 👩‍💼 Women Entrepreneur
-* 👴 Senior Citizen
+- 👨‍🎓 Student
+- 🌾 Farmer
+- 💼 Job Seeker
+- 🚀 Startup Founder
+- 👩‍💼 Women Entrepreneur
+- 👴 Senior Citizen
 
 Each user receives a personalized experience instead of generic recommendations.
 
@@ -96,18 +96,18 @@ Each user receives a personalized experience instead of generic recommendations.
 
 Project Netr supports multiple Indian languages, including:
 
-* English
-* हिन्दी
-* मराठी
-* தமிழ்
-* తెలుగు
-* ಕನ್ನಡ
-* മലയാളം
-* ગુજરાતી
-* ਪੰਜਾਬੀ
-* বাংলা
-* ଓଡ଼ିଆ
-* اردو
+- English
+- हिन्दी
+- मराठी
+- தமிழ்
+- తెలుగు
+- ಕನ್ನಡ
+- മലയാളം
+- ગુજરાતી
+- ਪੰਜਾਬੀ
+- বাংলা
+- ଓଡ଼ିଆ
+- اردو
 
 The platform is designed to make language **never become a barrier** to discovering opportunities.
 
@@ -119,12 +119,12 @@ Users can securely manage important documents.
 
 Features include:
 
-* Upload Documents
-* Preview Files
-* AI Analysis (future-ready)
-* Smart Categorization
-* Local Storage
-* Privacy-first Design
+- Upload Documents
+- Preview Files
+- AI Analysis (future-ready)
+- Smart Categorization
+- Local Storage
+- Privacy-first Design
 
 ---
 
@@ -132,13 +132,13 @@ Features include:
 
 Project Netr is designed to discover opportunities based on:
 
-* User Role
-* State
-* Age
-* Education
-* Occupation
-* Income Range
-* Language Preference
+- User Role
+- State
+- Age
+- Education
+- Occupation
+- Income Range
+- Language Preference
 
 Future versions will integrate live government data sources to provide real-time recommendations.
 
@@ -148,29 +148,29 @@ Future versions will integrate live government data sources to provide real-time
 
 ### Frontend
 
-* React
-* TypeScript
-* Vite
-* Tailwind CSS
-* Framer Motion
-* shadcn/ui
-* TanStack Router
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- shadcn/ui
+- TanStack Router
 
 ### AI (Planned)
 
-* Google Gemini
-* AI SDK
-* Retrieval-Augmented Generation (RAG)
+- Google Gemini
+- AI SDK
+- Retrieval-Augmented Generation (RAG)
 
 ### State Management
 
-* Zustand
-* Local Storage
-* IndexedDB
+- Zustand
+- Local Storage
+- IndexedDB
 
 ### Internationalization
 
-* react-i18next
+- react-i18next
 
 ---
 
@@ -200,27 +200,27 @@ Project-Netr
 
 Project Netr follows a privacy-first philosophy.
 
-* No mandatory login
-* No user authentication required
-* Local-first preferences
-* Secure document handling
-* Future-ready encrypted storage
+- No mandatory login
+- No user authentication required
+- Local-first preferences
+- Secure document handling
+- Future-ready encrypted storage
 
 ---
 
 # 🚧 Future Roadmap
 
-* ✅ Gemini AI Integration
-* ✅ Live Government Scheme APIs
-* ✅ Scholarship Search Engine
-* ✅ AI Eligibility Checker
-* ✅ AI Document Verification
-* ✅ Personalized Notifications
-* ✅ OCR-Based Document Reading
-* ✅ Voice Assistant
-* ✅ Regional Language AI
-* ✅ Mobile Application
-* ✅ Offline Support (PWA)
+- ✅ Gemini AI Integration
+- ✅ Live Government Scheme APIs
+- ✅ Scholarship Search Engine
+- ✅ AI Eligibility Checker
+- ✅ AI Document Verification
+- ✅ Personalized Notifications
+- ✅ OCR-Based Document Reading
+- ✅ Voice Assistant
+- ✅ Regional Language AI
+- ✅ Mobile Application
+- ✅ Offline Support (PWA)
 
 ---
 

@@ -3,9 +3,26 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 export type LangCode =
-  | "en" | "hi" | "mr" | "ta" | "te" | "kn" | "ml" | "gu" | "pa" | "bn" | "or" | "ur";
+  | "en"
+  | "hi"
+  | "mr"
+  | "ta"
+  | "te"
+  | "kn"
+  | "ml"
+  | "gu"
+  | "pa"
+  | "bn"
+  | "or"
+  | "ur";
 
-export const SUPPORTED_LANGUAGES: { code: LangCode; native: string; english: string; flag: string; dir?: "rtl" | "ltr" }[] = [
+export const SUPPORTED_LANGUAGES: {
+  code: LangCode;
+  native: string;
+  english: string;
+  flag: string;
+  dir?: "rtl" | "ltr";
+}[] = [
   { code: "en", native: "English", english: "English", flag: "🇬🇧" },
   { code: "hi", native: "हिन्दी", english: "Hindi", flag: "🇮🇳" },
   { code: "mr", native: "मराठी", english: "Marathi", flag: "🇮🇳" },
@@ -41,9 +58,16 @@ if (!i18n.isInitialized) {
       resources: {
         en: { translation: en },
         hi: { translation: hi },
-        mr: { translation: mr }, ta: { translation: ta }, te: { translation: te },
-        kn: { translation: kn }, ml: { translation: ml }, gu: { translation: gu },
-        pa: { translation: pa }, bn: { translation: bn }, or: { translation: or }, ur: { translation: ur },
+        mr: { translation: mr },
+        ta: { translation: ta },
+        te: { translation: te },
+        kn: { translation: kn },
+        ml: { translation: ml },
+        gu: { translation: gu },
+        pa: { translation: pa },
+        bn: { translation: bn },
+        or: { translation: or },
+        ur: { translation: ur },
       },
       fallbackLng: "en",
       supportedLngs: SUPPORTED_LANGUAGES.map((l) => l.code),
@@ -59,7 +83,10 @@ if (!i18n.isInitialized) {
 
 export function setLanguage(code: LangCode) {
   void i18n.changeLanguage(code);
-  try { localStorage.setItem("netr.lang.v1", code); localStorage.setItem("netr.lang.chosen", "1"); } catch {}
+  try {
+    localStorage.setItem("netr.lang.v1", code);
+    localStorage.setItem("netr.lang.chosen", "1");
+  } catch {}
   if (typeof document !== "undefined") {
     document.documentElement.lang = code;
     const meta = SUPPORTED_LANGUAGES.find((l) => l.code === code);
@@ -69,15 +96,26 @@ export function setLanguage(code: LangCode) {
 
 export function hasChosenLanguage(): boolean {
   if (typeof window === "undefined") return true;
-  try { return localStorage.getItem("netr.lang.chosen") === "1"; } catch { return true; }
+  try {
+    return localStorage.getItem("netr.lang.chosen") === "1";
+  } catch {
+    return true;
+  }
 }
 
 export function resetToBrowserLanguage() {
-  try { localStorage.removeItem("netr.lang.v1"); localStorage.removeItem("netr.lang.chosen"); } catch {}
-  const nav = (typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en") as LangCode;
+  try {
+    localStorage.removeItem("netr.lang.v1");
+    localStorage.removeItem("netr.lang.chosen");
+  } catch {}
+  const nav = (
+    typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en"
+  ) as LangCode;
   const supported = SUPPORTED_LANGUAGES.find((l) => l.code === nav);
   setLanguage(supported ? supported.code : "en");
-  try { localStorage.removeItem("netr.lang.chosen"); } catch {}
+  try {
+    localStorage.removeItem("netr.lang.chosen");
+  } catch {}
 }
 
 export default i18n;

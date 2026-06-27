@@ -27,8 +27,7 @@ export function NetrBot({
   const floatDur = mode === "thinking" ? 1.6 : mode === "celebrate" ? 0.9 : 3.4;
 
   // Eye glow pulses faster while thinking.
-  const eyeOpacity =
-    mode === "thinking" ? [1, 0.55, 1] : [1, 0.85, 1];
+  const eyeOpacity = mode === "thinking" ? [1, 0.55, 1] : [1, 0.85, 1];
   const eyeDur = mode === "thinking" ? 1.1 : 2.6;
 
   // Occasional blink (scaleY) — every cycle for thinking, sparing otherwise.
@@ -45,12 +44,7 @@ export function NetrBot({
       transition={{ duration: floatDur, repeat: Infinity, ease: "easeInOut" }}
       style={{ width: size, height: size, display: "inline-block" }}
     >
-      <svg
-        viewBox="0 0 128 128"
-        width={size}
-        height={size}
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg viewBox="0 0 128 128" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="netrbot-body" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#FFFFFF" />
@@ -78,7 +72,15 @@ export function NetrBot({
         <ellipse cx="64" cy="118" rx="28" ry="4" fill="url(#netrbot-shadow)" />
 
         {/* Antenna */}
-        <line x1="64" y1="14" x2="64" y2="24" stroke="#0B3A8C" strokeWidth="2.2" strokeLinecap="round" />
+        <line
+          x1="64"
+          y1="14"
+          x2="64"
+          y2="24"
+          stroke="#0B3A8C"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+        />
         <motion.circle
           cx="64"
           cy="12"
@@ -89,7 +91,16 @@ export function NetrBot({
         />
 
         {/* Head */}
-        <rect x="22" y="24" width="84" height="64" rx="22" fill="url(#netrbot-body)" stroke="#D7E2F4" strokeWidth="1.5" />
+        <rect
+          x="22"
+          y="24"
+          width="84"
+          height="64"
+          rx="22"
+          fill="url(#netrbot-body)"
+          stroke="#D7E2F4"
+          strokeWidth="1.5"
+        />
 
         {/* Side ears */}
         <rect x="14" y="46" width="10" height="20" rx="4" fill="#0B3A8C" />
@@ -107,7 +118,12 @@ export function NetrBot({
         <g>
           <motion.g
             animate={{ scaleY: blinkValues }}
-            transition={{ duration: blinkDur, times: blinkTimes, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: blinkDur,
+              times: blinkTimes,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
             style={{ transformOrigin: "50px 54px", transformBox: "fill-box" as never }}
           >
             <circle cx="50" cy="54" r="8" fill="url(#netrbot-eye)" filter="url(#netrbot-soft)" />
@@ -122,7 +138,13 @@ export function NetrBot({
           </motion.g>
           <motion.g
             animate={{ scaleY: blinkValues }}
-            transition={{ duration: blinkDur, times: blinkTimes, repeat: Infinity, ease: "easeInOut", delay: 0.05 }}
+            transition={{
+              duration: blinkDur,
+              times: blinkTimes,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.05,
+            }}
             style={{ transformOrigin: "78px 54px", transformBox: "fill-box" as never }}
           >
             <circle cx="78" cy="54" r="8" fill="url(#netrbot-eye)" filter="url(#netrbot-soft)" />
@@ -151,7 +173,16 @@ export function NetrBot({
         <circle cx="90" cy="62" r="2" fill="#138808" opacity="0.75" />
 
         {/* Body / collar */}
-        <rect x="36" y="86" width="56" height="22" rx="11" fill="#FFFFFF" stroke="#D7E2F4" strokeWidth="1.5" />
+        <rect
+          x="36"
+          y="86"
+          width="56"
+          height="22"
+          rx="11"
+          fill="#FFFFFF"
+          stroke="#D7E2F4"
+          strokeWidth="1.5"
+        />
         <circle cx="56" cy="97" r="2.4" fill="#FF9933" />
         <circle cx="64" cy="97" r="2.4" fill="#0B3A8C" />
         <circle cx="72" cy="97" r="2.4" fill="#138808" />

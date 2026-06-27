@@ -31,15 +31,19 @@ export function TopNav() {
           />
           <div className="flex flex-col leading-none">
             <span className="font-display text-base font-bold tracking-tight">
-              <span className="text-[#1e3a8a]">Project</span> <span className="text-[#ef7c1a]">Netr</span>
+              <span className="text-[#1e3a8a]">Project</span>{" "}
+              <span className="text-[#ef7c1a]">Netr</span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{t("nav.tagline")}</span>
+            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              {t("nav.tagline")}
+            </span>
           </div>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {tabs.map((tab) => {
-            const active = pathname === tab.to || (tab.to !== "/dashboard" && pathname.startsWith(tab.to));
+            const active =
+              pathname === tab.to || (tab.to !== "/dashboard" && pathname.startsWith(tab.to));
             return (
               <Link
                 key={tab.to}
@@ -53,7 +57,9 @@ export function TopNav() {
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className={`relative ${active ? "text-foreground" : ""}`}>{t(`nav.${tab.key}`)}</span>
+                <span className={`relative ${active ? "text-foreground" : ""}`}>
+                  {t(`nav.${tab.key}`)}
+                </span>
               </Link>
             );
           })}
@@ -69,7 +75,8 @@ export function TopNav() {
 
       <div className="flex gap-1 overflow-x-auto px-4 pb-2 lg:hidden">
         {tabs.map((tab) => {
-          const active = pathname === tab.to || (tab.to !== "/dashboard" && pathname.startsWith(tab.to));
+          const active =
+            pathname === tab.to || (tab.to !== "/dashboard" && pathname.startsWith(tab.to));
           return (
             <Link
               key={tab.to}

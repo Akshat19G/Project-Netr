@@ -13,7 +13,11 @@ export const Route = createFileRoute("/schemes")({
   head: () => ({
     meta: [
       { title: "Schemes · Project Netr" },
-      { name: "description", content: "Government schemes across welfare, housing, healthcare, agriculture and skilling — clearly explained." },
+      {
+        name: "description",
+        content:
+          "Government schemes across welfare, housing, healthcare, agriculture and skilling — clearly explained.",
+      },
     ],
   }),
   component: SchemesPage,
@@ -33,12 +37,22 @@ function SchemesPage() {
     <AppShell>
       <PageHeader
         eyebrow={t("schemes.eyebrow")}
-        title={<>{t("schemes.titlePre")} <span className="netr-glow-text">{t("schemes.titleHighlight")}</span></>}
+        title={
+          <>
+            {t("schemes.titlePre")}{" "}
+            <span className="netr-glow-text">{t("schemes.titleHighlight")}</span>
+          </>
+        }
         description={t("schemes.description")}
       />
       <div className="netr-card mb-6 flex items-center gap-3 px-4 py-3">
         <Search className="h-4 w-4 text-muted-foreground" />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("schemes.searchPlaceholder")} className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder={t("schemes.searchPlaceholder")}
+          className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground/70"
+        />
         {isFetching && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
       </div>
       <div className="flex flex-wrap gap-2">
@@ -59,10 +73,14 @@ function SchemesPage() {
         ))}
       </div>
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((o, i) => <OpportunityCard key={o.id} opportunity={o} index={i} />)}
+        {data.map((o, i) => (
+          <OpportunityCard key={o.id} opportunity={o} index={i} />
+        ))}
       </div>
       {data.length === 0 && !isFetching && (
-        <div className="netr-card mt-10 p-10 text-center text-sm text-muted-foreground">{t("schemes.emptyBody")}</div>
+        <div className="netr-card mt-10 p-10 text-center text-sm text-muted-foreground">
+          {t("schemes.emptyBody")}
+        </div>
       )}
     </AppShell>
   );

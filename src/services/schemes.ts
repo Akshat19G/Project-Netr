@@ -11,7 +11,10 @@ const SCHEME_CATS: ProgramCategory[] = [
   "women",
 ];
 
-export async function searchGovernmentSchemes(q = "", category?: ProgramCategory | null): Promise<Program[]> {
+export async function searchGovernmentSchemes(
+  q = "",
+  category?: ProgramCategory | null,
+): Promise<Program[]> {
   if (category && SCHEME_CATS.includes(category)) return searchOpportunities({ q, category });
   const all = await searchOpportunities({ q });
   return all.filter((p) => SCHEME_CATS.includes(p.category));

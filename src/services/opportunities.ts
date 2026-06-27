@@ -31,7 +31,8 @@ export async function searchOpportunities(query: OpportunityQuery = {}): Promise
 
   if (q) {
     list = list.filter((p) => {
-      const haystack = `${p.title} ${p.ministry} ${p.description} ${p.benefits} ${p.tags.join(" ")} ${p.targetGroups.join(" ")}`.toLowerCase();
+      const haystack =
+        `${p.title} ${p.ministry} ${p.description} ${p.benefits} ${p.tags.join(" ")} ${p.targetGroups.join(" ")}`.toLowerCase();
       return haystack.includes(q);
     });
   }
@@ -70,7 +71,11 @@ export async function findEligiblePrograms(profile: UserProfile, limit = 24): Pr
     if (isWoman && (p.category === "women" || p.category === "startup")) score += 5;
     if (isYouth && (p.category === "skill" || p.category === "employment")) score += 4;
     if (isSenior && (p.category === "insurance" || p.category === "healthcare")) score += 5;
-    if (isRural && (p.category === "employment" || p.category === "housing" || p.category === "welfare")) score += 3;
+    if (
+      isRural &&
+      (p.category === "employment" || p.category === "housing" || p.category === "welfare")
+    )
+      score += 3;
 
     if (profile.state && p.states.includes(profile.state)) score += 2;
     if (lowIncome && /(income|ews|bpl|poor|secc)/i.test(p.description)) score += 3;
