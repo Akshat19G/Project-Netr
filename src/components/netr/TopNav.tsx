@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import netrLogo from "@/assets/netr-logo.png.asset.json";
+import netrLogo from "@/assets/netr-logo.png";
 
 const tabs = [
   { to: "/dashboard", key: "dashboard" },
@@ -23,7 +23,7 @@ export function TopNav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2.5">
           <img
-            src={netrLogo.url}
+            src={netrLogo}
             alt="Project Netr"
             width={40}
             height={40}

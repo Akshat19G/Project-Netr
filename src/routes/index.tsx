@@ -12,7 +12,7 @@ import {
   Sprout,
 } from "lucide-react";
 import treeImg from "@/assets/tree-of-opportunities.png";
-import netrLogo from "@/assets/netr-logo.png.asset.json";
+import netrLogo from "@/assets/netr-logo.png";
 import { categories, personas } from "@/lib/netr-data";
 import { TopNav } from "@/components/netr/TopNav";
 import { useTranslation } from "react-i18next";
@@ -316,7 +316,7 @@ function Footer() {
     <footer className="border-t border-border/40 py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 text-xs text-muted-foreground sm:flex-row">
         <div className="flex items-center gap-2">
-          <img src={netrLogo.url} alt={t("brand.name")} width={28} height={28} className="h-7 w-7 object-contain" />
+          <img src={netrLogo} alt={t("brand.name")} width={28} height={28} className="h-7 w-7 object-contain" />
           <p>{t("brand.footerMotto")}</p>
         </div>
         <p>{t("brand.indexFooter")}</p>

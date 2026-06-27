@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Code2, Heart, Sparkles, ShieldCheck, Compass } from "lucide-react";
 import { AppShell } from "@/components/netr/AppShell";
-import netrLogo from "@/assets/netr-logo.png.asset.json";
+import netrLogo from "@/assets/netr-logo.png";
 import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/about")({
@@ -30,7 +30,7 @@ function AboutPage() {
         className="mx-auto max-w-4xl"
       >
         <div className="flex flex-col items-center text-center">
-          <img src={netrLogo.url} alt={t("brand.name")} width={140} height={140} className="h-32 w-32 select-none object-contain" />
+          <img src={netrLogo} alt={t("brand.name")} width={140} height={140} className="h-32 w-32 select-none object-contain" />
           <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-saffron">{t("about.eyebrow")}</p>
           <h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
             {t("about.titlePre")} <span className="netr-glow-text">{t("about.titleHighlight")}</span> {t("about.titlePost")}

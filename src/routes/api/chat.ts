@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { GoogleGenAI } from "@google/genai";
 import { programCatalogForPrompt } from "@/data/programs";
 import type { UserProfile } from "@/lib/types";
+
+type UIPart = { type: string; text?: string };
+type UIMessage = { id?: string; role: "user" | "assistant" | "system"; parts: UIPart[] };
 
 function profileSummary(p?: UserProfile): string {
   if (!p) return "No profile provided yet.";
@@ -50,6 +52,27 @@ ${programCatalogForPrompt()}
 `;
 }
 
+function uiMessagesToGeminiContents(messages: UIMessage[]) {
+  return messages
+    .filter((m) => m.role === "user" || m.role === "assistant")
+    .map((m) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [
+        {
+          text: (m.parts || [])
+            .filter((p) => p.type === "text" && typeof p.text === "string")
+            .map((p) => p.text as string)
+            .join(""),
+        },
+      ],
+    }))
+    .filter((c) => c.parts[0].text.length > 0);
+}
+
+function sse(obj: unknown): string {
+  return `data: ${JSON.stringify(obj)}\n\n`;
+}
+
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
@@ -78,15 +101,54 @@ export const Route = createFileRoute("/api/chat")({
         }
 
         try {
-          const google = createGoogleGenerativeAI({ apiKey });
-          const result = streamText({
-            model: google("gemini-2.0-flash"),
-            system: buildSystemPrompt(body.profile, body.language),
-            messages: await convertToModelMessages(body.messages as UIMessage[]),
+          const ai = new GoogleGenAI({ apiKey });
+          const contents = uiMessagesToGeminiContents(body.messages as UIMessage[]);
+          const systemInstruction = buildSystemPrompt(body.profile, body.language);
+
+          const stream = await ai.models.generateContentStream({
+            model: "gemini-2.5-flash",
+            contents,
+            config: { systemInstruction },
           });
 
-          return result.toUIMessageStreamResponse({
-            originalMessages: body.messages as UIMessage[],
+          const encoder = new TextEncoder();
+          const textId = crypto.randomUUID();
+          const messageId = crypto.randomUUID();
+
+          const readable = new ReadableStream<Uint8Array>({
+            async start(controller) {
+              try {
+                controller.enqueue(encoder.encode(sse({ type: "start", messageId })));
+                controller.enqueue(encoder.encode(sse({ type: "start-step" })));
+                controller.enqueue(encoder.encode(sse({ type: "text-start", id: textId })));
+                for await (const chunk of stream) {
+                  const delta = chunk.text;
+                  if (delta) {
+                    controller.enqueue(
+                      encoder.encode(sse({ type: "text-delta", id: textId, delta })),
+                    );
+                  }
+                }
+                controller.enqueue(encoder.encode(sse({ type: "text-end", id: textId })));
+                controller.enqueue(encoder.encode(sse({ type: "finish-step" })));
+                controller.enqueue(encoder.encode(sse({ type: "finish" })));
+                controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+                controller.close();
+              } catch (err) {
+                const message = err instanceof Error ? err.message : "Stream failed";
+                controller.enqueue(encoder.encode(sse({ type: "error", errorText: message })));
+                controller.close();
+              }
+            },
+          });
+
+          return new Response(readable, {
+            headers: {
+              "content-type": "text/event-stream",
+              "cache-control": "no-cache, no-transform",
+              connection: "keep-alive",
+              "x-vercel-ai-ui-message-stream": "v1",
+            },
           });
         } catch (err) {
           console.error("Netr chat error:", err);
@@ -100,4 +162,3 @@ export const Route = createFileRoute("/api/chat")({
     },
   },
 });
-

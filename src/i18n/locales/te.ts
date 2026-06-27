@@ -585,4 +585,3 @@ const translation = {
 
 export default translation;
 export type Translation = typeof translation;
-

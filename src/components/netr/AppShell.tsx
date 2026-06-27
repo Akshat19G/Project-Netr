@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { TopNav } from "./TopNav";
-import netrLogo from "@/assets/netr-logo.png.asset.json";
+import netrLogo from "@/assets/netr-logo.png";
 import { useTranslation } from "react-i18next";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -12,7 +12,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="border-t border-border/50 py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-6 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <img src={netrLogo.url} alt={t("brand.name")} width={24} height={24} className="h-6 w-6 object-contain opacity-80" />
+            <img src={netrLogo} alt={t("brand.name")} width={24} height={24} className="h-6 w-6 object-contain opacity-80" />
             <p>{t("brand.footerMotto")}</p>
           </div>
           <p className="tracking-wide">

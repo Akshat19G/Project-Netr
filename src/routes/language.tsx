@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Check } from "lucide-react";
 import { SUPPORTED_LANGUAGES, setLanguage, type LangCode } from "@/i18n";
-import netrLogo from "@/assets/netr-logo.png.asset.json";
+import netrLogo from "@/assets/netr-logo.png";
 import welcomeImg from "@/assets/illustration-language-welcome.png";
 
 export const Route = createFileRoute("/language")({
@@ -35,7 +35,7 @@ function LanguagePage() {
   return (
     <div className="min-h-screen netr-hero-bg">
       <header className="mx-auto flex max-w-6xl items-center gap-2.5 px-4 py-6 sm:px-6">
-        <img src={netrLogo.url} alt="Project Netr" width={40} height={40} className="h-10 w-10 object-contain" />
+        <img src={netrLogo} alt="Project Netr" width={40} height={40} className="h-10 w-10 object-contain" />
         <div className="leading-none">
           <div className="font-display text-base font-bold tracking-tight">
             <span className="text-[#1e3a8a]">Project</span> <span className="text-[#ef7c1a]">Netr</span>
