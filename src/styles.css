@@ -159,7 +159,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
@@ -167,9 +172,21 @@
 
 @utility netr-hero-bg {
   background:
-    radial-gradient(ellipse 80% 60% at 20% 0%, color-mix(in oklab, var(--saffron) 22%, transparent), transparent 60%),
-    radial-gradient(ellipse 70% 60% at 90% 20%, color-mix(in oklab, var(--leaf) 18%, transparent), transparent 60%),
-    radial-gradient(ellipse 100% 80% at 50% 100%, color-mix(in oklab, var(--sky) 14%, transparent), transparent 70%),
+    radial-gradient(
+      ellipse 80% 60% at 20% 0%,
+      color-mix(in oklab, var(--saffron) 22%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 90% 20%,
+      color-mix(in oklab, var(--leaf) 18%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 100% 80% at 50% 100%,
+      color-mix(in oklab, var(--sky) 14%, transparent),
+      transparent 70%
+    ),
     var(--background);
 }
 
@@ -185,7 +202,10 @@
   border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
   backdrop-filter: blur(8px);
   border-radius: var(--radius-2xl);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 @utility netr-card-hover {

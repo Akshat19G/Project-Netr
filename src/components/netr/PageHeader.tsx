@@ -22,7 +22,9 @@ export function PageHeader({
         )}
         <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
         {description && (
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">{description}</p>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {description}
+          </p>
         )}
       </div>
       {actions && <div className="flex shrink-0 items-center gap-3">{actions}</div>}

@@ -16,7 +16,8 @@ export const useProfileStore = create<ProfileState>()(
       profile: {},
       hasProfile: false,
       setProfile: (next) => set({ profile: { ...next, updatedAt: Date.now() }, hasProfile: true }),
-      patch: (next) => set({ profile: { ...get().profile, ...next, updatedAt: Date.now() }, hasProfile: true }),
+      patch: (next) =>
+        set({ profile: { ...get().profile, ...next, updatedAt: Date.now() }, hasProfile: true }),
       clear: () => set({ profile: {}, hasProfile: false }),
     }),
     { name: "netr.profile.v1", storage: createJSONStorage(() => localStorage) },

@@ -58,7 +58,9 @@ export const Route = createFileRoute("/api/analyze-document")({
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
           return new Response(
-            JSON.stringify({ error: "Server is missing GEMINI_API_KEY. Set it in your environment variables." }),
+            JSON.stringify({
+              error: "Server is missing GEMINI_API_KEY. Set it in your environment variables.",
+            }),
             { status: 500, headers: { "content-type": "application/json" } },
           );
         }
@@ -67,12 +69,14 @@ export const Route = createFileRoute("/api/analyze-document")({
           body = (await request.json()) as Body;
         } catch {
           return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
-            status: 400, headers: { "content-type": "application/json" },
+            status: 400,
+            headers: { "content-type": "application/json" },
           });
         }
         if (!body?.name || !body?.dataUrl) {
           return new Response(JSON.stringify({ error: "name and dataUrl are required" }), {
-            status: 400, headers: { "content-type": "application/json" },
+            status: 400,
+            headers: { "content-type": "application/json" },
           });
         }
 
@@ -112,14 +116,23 @@ export const Route = createFileRoute("/api/analyze-document")({
             candidates?: { content?: { parts?: { text?: string }[] } }[];
           };
           const raw = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-          const cleaned = raw.trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+          const cleaned = raw
+            .trim()
+            .replace(/^```json\s*/i, "")
+            .replace(/^```\s*/i, "")
+            .replace(/```$/i, "")
+            .trim();
           let parsed: Partial<DocAnalysis> = {};
           try {
             parsed = JSON.parse(cleaned);
           } catch {
             const m = cleaned.match(/\{[\s\S]*\}/);
             if (m) {
-              try { parsed = JSON.parse(m[0]); } catch { /* ignore */ }
+              try {
+                parsed = JSON.parse(m[0]);
+              } catch {
+                /* ignore */
+              }
             }
           }
 
@@ -141,7 +154,8 @@ export const Route = createFileRoute("/api/analyze-document")({
           const message = err instanceof Error ? err.message : "Analyze failed";
           console.error("Netr analyze error:", err);
           return new Response(JSON.stringify({ error: message }), {
-            status: 500, headers: { "content-type": "application/json" },
+            status: 500,
+            headers: { "content-type": "application/json" },
           });
         }
       },

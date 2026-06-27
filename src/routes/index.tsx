@@ -21,9 +21,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Project Netr — Every Dream Deserves an Opportunity" },
-      { name: "description", content: "An AI-powered opportunity discovery platform for scholarships, grants, schemes, healthcare and welfare programs designed for people like you." },
+      {
+        name: "description",
+        content:
+          "An AI-powered opportunity discovery platform for scholarships, grants, schemes, healthcare and welfare programs designed for people like you.",
+      },
       { property: "og:title", content: "Project Netr — Every Dream Deserves an Opportunity" },
-      { property: "og:description", content: "Discover scholarships, grants, government schemes and benefits designed for people like you. No login. No accounts. Just possibility." },
+      {
+        property: "og:description",
+        content:
+          "Discover scholarships, grants, government schemes and benefits designed for people like you. No login. No accounts. Just possibility.",
+      },
     ],
   }),
   component: Index,
@@ -60,7 +68,8 @@ function Hero() {
           </span>
           <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
             {t("home.hero.headlineLine1")} <br />
-            {t("home.hero.headlineLine2Pre")} <span className="netr-glow-text">{t("home.hero.headlineLine2Highlight")}</span>
+            {t("home.hero.headlineLine2Pre")}{" "}
+            <span className="netr-glow-text">{t("home.hero.headlineLine2Highlight")}</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
             {t("home.hero.lead")}
@@ -81,9 +90,15 @@ function Hero() {
             </Link>
           </div>
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.noAccount")}</span>
-            <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.privacyFirst")}</span>
-            <span className="inline-flex items-center gap-1.5"><HeartHandshake className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.freeAlways")}</span>
+            <span className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.noAccount")}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Lock className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.privacyFirst")}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <HeartHandshake className="h-3.5 w-3.5 text-leaf" /> {t("home.hero.freeAlways")}
+            </span>
           </div>
         </motion.div>
 
@@ -108,7 +123,9 @@ function Hero() {
             className="absolute -left-2 top-1/3 hidden rounded-2xl border border-border/60 bg-background/80 p-3 text-xs shadow-xl backdrop-blur sm:block"
           >
             <div className="flex items-center gap-2">
-              <span className="grid h-7 w-7 place-items-center rounded-lg bg-saffron/15 text-saffron"><Sprout className="h-3.5 w-3.5" /></span>
+              <span className="grid h-7 w-7 place-items-center rounded-lg bg-saffron/15 text-saffron">
+                <Sprout className="h-3.5 w-3.5" />
+              </span>
               <div>
                 <div className="font-semibold">{t("home.hero.notifTitle")}</div>
                 <div className="text-muted-foreground">{t("home.hero.notifSub")}</div>
@@ -133,9 +150,15 @@ function WhyNetr() {
     <section className="border-t border-border/40 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-12 max-w-2xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">{t("home.why.eyebrow")}</p>
-          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("home.why.title")}</h2>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">{t("home.why.lead")}</p>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">
+            {t("home.why.eyebrow")}
+          </p>
+          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+            {t("home.why.title")}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            {t("home.why.lead")}
+          </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stories.map((s, i) => (
@@ -165,10 +188,17 @@ function CategoriesSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-xl">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">{t("home.cats.eyebrow")}</p>
-            <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("home.cats.title")}</h2>
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">
+              {t("home.cats.eyebrow")}
+            </p>
+            <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("home.cats.title")}
+            </h2>
           </div>
-          <Link to="/opportunities" className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-saffron">
+          <Link
+            to="/opportunities"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-saffron"
+          >
             {t("home.cats.browseAll")} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -184,13 +214,20 @@ function CategoriesSection() {
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="netr-card netr-card-hover group relative overflow-hidden p-6"
               >
-                <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${p.accent} opacity-60 transition-opacity group-hover:opacity-100`} />
+                <div
+                  className={`absolute inset-0 -z-10 bg-gradient-to-br ${p.accent} opacity-60 transition-opacity group-hover:opacity-100`}
+                />
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-background/80 text-foreground shadow-sm">
                   <Icon className="h-5 w-5" />
                 </span>
                 <h3 className="mt-5 text-lg font-semibold">{t(`personas.${p.id}.title`)}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t(`personas.${p.id}.description`)}</p>
-                <Link to="/onboarding" className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground/90 group-hover:text-saffron">
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {t(`personas.${p.id}.description`)}
+                </p>
+                <Link
+                  to="/onboarding"
+                  className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground/90 group-hover:text-saffron"
+                >
                   {t("home.cats.explore")} <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </motion.div>
@@ -231,8 +268,12 @@ function HowItWorks() {
     <section className="border-t border-border/40 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-14 max-w-2xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">{t("home.how.eyebrow")}</p>
-          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("home.how.title")}</h2>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-saffron">
+            {t("home.how.eyebrow")}
+          </p>
+          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+            {t("home.how.title")}
+          </h2>
         </div>
         <ol className="grid gap-6 lg:grid-cols-3">
           {steps.map((s, i) => (
@@ -261,8 +302,16 @@ function HowItWorks() {
 function PrivacySection() {
   const { t } = useTranslation();
   const items = [
-    { icon: UserX, title: t("home.privacy.noAccount.title"), body: t("home.privacy.noAccount.body") },
-    { icon: ShieldCheck, title: t("home.privacy.noLogin.title"), body: t("home.privacy.noLogin.body") },
+    {
+      icon: UserX,
+      title: t("home.privacy.noAccount.title"),
+      body: t("home.privacy.noAccount.body"),
+    },
+    {
+      icon: ShieldCheck,
+      title: t("home.privacy.noLogin.title"),
+      body: t("home.privacy.noLogin.body"),
+    },
     { icon: Lock, title: t("home.privacy.first.title"), body: t("home.privacy.first.body") },
     { icon: EyeOff, title: t("home.privacy.data.title"), body: t("home.privacy.data.body") },
     { icon: Compass, title: t("home.privacy.explore.title"), body: t("home.privacy.explore.body") },
@@ -271,9 +320,15 @@ function PrivacySection() {
     <section className="border-t border-border/40 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-12 max-w-2xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-leaf">{t("home.privacy.eyebrow")}</p>
-          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("home.privacy.title")}</h2>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">{t("home.privacy.lead")}</p>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-leaf">
+            {t("home.privacy.eyebrow")}
+          </p>
+          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+            {t("home.privacy.title")}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            {t("home.privacy.lead")}
+          </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((it) => {
@@ -297,8 +352,12 @@ function ClosingCTA() {
   return (
     <section className="px-4 pb-24 pt-10 sm:px-6">
       <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-border/60 bg-gradient-to-br from-saffron/20 via-saffron-glow/15 to-leaf/15 p-10 text-center sm:p-16">
-        <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-5xl">{t("home.cta.title")}</h2>
-        <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">{t("home.cta.lead")}</p>
+        <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-5xl">
+          {t("home.cta.title")}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+          {t("home.cta.lead")}
+        </p>
         <Link
           to="/onboarding"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
@@ -316,7 +375,13 @@ function Footer() {
     <footer className="border-t border-border/40 py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 text-xs text-muted-foreground sm:flex-row">
         <div className="flex items-center gap-2">
-          <img src={netrLogo} alt={t("brand.name")} width={28} height={28} className="h-7 w-7 object-contain" />
+          <img
+            src={netrLogo}
+            alt={t("brand.name")}
+            width={28}
+            height={28}
+            className="h-7 w-7 object-contain"
+          />
           <p>{t("brand.footerMotto")}</p>
         </div>
         <p>{t("brand.indexFooter")}</p>

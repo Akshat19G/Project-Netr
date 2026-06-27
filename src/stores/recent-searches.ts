@@ -14,7 +14,10 @@ export const useRecentSearchesStore = create<RecentState>()(
       push: (q) => {
         const trimmed = q.trim();
         if (!trimmed) return;
-        const next = [trimmed, ...get().searches.filter((x) => x.toLowerCase() !== trimmed.toLowerCase())].slice(0, 8);
+        const next = [
+          trimmed,
+          ...get().searches.filter((x) => x.toLowerCase() !== trimmed.toLowerCase()),
+        ].slice(0, 8);
         set({ searches: next });
       },
       clear: () => set({ searches: [] }),

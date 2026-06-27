@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -22,9 +23,18 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">{t("errors.pageNotFoundTitle", "404")}</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">{t("errors.pageNotFoundHeading", "Page not found")}</h2>
-        <p className="mt-2 text-sm text-muted-foreground">{t("errors.pageNotFoundBody", "The page you're looking for doesn't exist or has been moved.")}</p>
+        <h1 className="text-7xl font-bold text-foreground">
+          {t("errors.pageNotFoundTitle", "404")}
+        </h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">
+          {t("errors.pageNotFoundHeading", "Page not found")}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {t(
+            "errors.pageNotFoundBody",
+            "The page you're looking for doesn't exist or has been moved.",
+          )}
+        </p>
         <div className="mt-6">
           <Link
             to="/"
@@ -49,8 +59,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">{t("errors.didntLoad", "This page didn't load")}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{t("errors.somethingWrong", "Something went wrong on our end. You can try refreshing or head back home.")}</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          {t("errors.didntLoad", "This page didn't load")}
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {t(
+            "errors.somethingWrong",
+            "Something went wrong on our end. You can try refreshing or head back home.",
+          )}
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -79,10 +96,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Project Netr — Every Dream Deserves an Opportunity" },
-      { name: "description", content: "An AI-powered opportunity discovery platform for scholarships, grants, schemes, healthcare, jobs, and welfare programs designed for people like you." },
+      {
+        name: "description",
+        content:
+          "An AI-powered opportunity discovery platform for scholarships, grants, schemes, healthcare, jobs, and welfare programs designed for people like you.",
+      },
       { name: "author", content: "Project Netr" },
       { property: "og:title", content: "Project Netr — Every Dream Deserves an Opportunity" },
-      { property: "og:description", content: "Discover scholarships, grants, government schemes, and benefits designed for people like you." },
+      {
+        property: "og:description",
+        content:
+          "Discover scholarships, grants, government schemes, and benefits designed for people like you.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -136,6 +161,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Toaster position="top-center" richColors closeButton />
+      <Analytics />
     </QueryClientProvider>
   );
 }

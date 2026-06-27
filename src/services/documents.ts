@@ -28,7 +28,23 @@ export const ALLOWED_MIME = new Set([
 ]);
 
 const ALLOWED_EXT = new Set([
-  "pdf","doc","docx","txt","rtf","jpg","jpeg","png","webp","heic","heif","csv","xlsx","xls","pptx","ppt","zip",
+  "pdf",
+  "doc",
+  "docx",
+  "txt",
+  "rtf",
+  "jpg",
+  "jpeg",
+  "png",
+  "webp",
+  "heic",
+  "heif",
+  "csv",
+  "xlsx",
+  "xls",
+  "pptx",
+  "ppt",
+  "zip",
 ]);
 
 export function extOf(name: string): string {
@@ -49,16 +65,31 @@ export function validateFile(file: File): { ok: true } | { ok: false; reason: st
 /** Heuristic auto-classification by filename + mime. Backend OCR will override later. */
 export function classifyDocument(name: string, mime: string): DocCategory {
   const n = name.toLowerCase();
-  if (/\b(aadhaar|aadhar|pan|voter|passport|driving|license|licence|ration)\b/.test(n)) return "identity";
-  if (/\b(marksheet|markssheet|degree|transcript|10th|12th|matric|board|admit|hall.?ticket|diploma|bonafide)\b/.test(n)) return "education";
-  if (/\b(income|salary|payslip|bank|statement|itr|tax|gst|invoice|loan|emi|epf|uan|certificate.*income)\b/.test(n)) return "financial";
-  if (/\b(ayushman|health|medical|prescription|hospital|insurance|abha|vaccin|disabilit)\b/.test(n)) return "healthcare";
+  if (/\b(aadhaar|aadhar|pan|voter|passport|driving|license|licence|ration)\b/.test(n))
+    return "identity";
+  if (
+    /\b(marksheet|markssheet|degree|transcript|10th|12th|matric|board|admit|hall.?ticket|diploma|bonafide)\b/.test(
+      n,
+    )
+  )
+    return "education";
+  if (
+    /\b(income|salary|payslip|bank|statement|itr|tax|gst|invoice|loan|emi|epf|uan|certificate.*income)\b/.test(
+      n,
+    )
+  )
+    return "financial";
+  if (/\b(ayushman|health|medical|prescription|hospital|insurance|abha|vaccin|disabilit)\b/.test(n))
+    return "healthcare";
   if (/\b(certificate|award|cert)\b/.test(n)) return "certificates";
   if (mime.startsWith("image/")) return "images";
   return "other";
 }
 
-export async function saveDocument(file: File, opts?: { category?: DocCategory }): Promise<SavedDocument> {
+export async function saveDocument(
+  file: File,
+  opts?: { category?: DocCategory },
+): Promise<SavedDocument> {
   const category = opts?.category ?? classifyDocument(file.name, file.type);
   const now = Date.now();
   const doc: SavedDocument = {
@@ -143,7 +174,10 @@ function blobToDataUrl(blob: Blob): Promise<string> {
 }
 
 /** Send the document to /api/analyze-document. Throws on HTTP error. */
-export async function analyzeDocument(doc: SavedDocument, signal?: AbortSignal): Promise<DocAnalysis> {
+export async function analyzeDocument(
+  doc: SavedDocument,
+  signal?: AbortSignal,
+): Promise<DocAnalysis> {
   const dataUrl = await blobToDataUrl(doc.blob);
   const res = await fetch("/api/analyze-document", {
     method: "POST",
